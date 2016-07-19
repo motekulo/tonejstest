@@ -50,7 +50,7 @@ var app = {
 
 app.initialize();
 
-Tone.Transport._clock._lookAhead = 0.024;
+Tone.Transport._clock._lookAhead = 0.064;
 Tone.Transport.loop = true;
 Tone.Transport.loopStart = 0;
 Tone.Transport.loopEnd = "1m";
