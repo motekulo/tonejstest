@@ -50,7 +50,7 @@ var app = {
 
 app.initialize();
 
-Tone.Transport._clock._lookAhead = 0.064;
+Tone.Transport._clock._lookAhead = 0.256;
 Tone.Transport.loop = true;
 Tone.Transport.loopStart = 0;
 Tone.Transport.loopEnd = "1m";
@@ -80,5 +80,5 @@ this.part.add("0:0:0 + 6 * 8n", "B4");
 this.part.add("0:0:0 + 7 * 8n", "E4");
 
 this.part.loop = true;
-this.part.loopEnd = "4m";
+this.part.loopEnd = "1m";
 this.part.start(0);
