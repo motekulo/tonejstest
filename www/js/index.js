@@ -64,24 +64,34 @@ var ToneTest = function(){
     // Beep on start
     this.instrument.triggerAttackRelease("G4", "8n");
     notes = [];
-    this.part = new Tone.Part((function(time, note) {
+
+    var seq = new Tone.Sequence((function(time, note){
 
         this.instrument.triggerAttackRelease(note, "16n");
 
-    }).bind(this), notes);
+    }).bind(this), ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "E4"], "8n");
 
-    this.part.add("0 * 8n", "C4");
-    this.part.add("1 * 8n", "D4");
-    this.part.add("2 * 8n", "E4");
-    this.part.add("3 * 8n", "F4");
-    this.part.add("4 * 8n", "G4");
-    this.part.add("5 * 8n", "A4");
-    this.part.add("6 * 8n", "B4");
-    this.part.add("7 * 8n", "E4");
-
-    this.part.loop = true;
-    this.part.loopEnd = "1m";
-    this.part.start(0);
+    seq.loop = true;
+    seq.loopEnd = "1m";
+    seq.start(0);
+    // this.part = new Tone.Part((function(time, note) {
+    //
+    //     this.instrument.triggerAttackRelease(note, "16n");
+    //
+    // }).bind(this), notes);
+    //
+    // this.part.add("0 * 8n", "C4");
+    // this.part.add("1 * 8n", "D4");
+    // this.part.add("2 * 8n", "E4");
+    // this.part.add("3 * 8n", "F4");
+    // this.part.add("4 * 8n", "G4");
+    // this.part.add("5 * 8n", "A4");
+    // this.part.add("6 * 8n", "B4");
+    // this.part.add("7 * 8n", "E4");
+    //
+    // this.part.loop = true;
+    // this.part.loopEnd = "1m";
+    // this.part.start(0);
 
     Tone.Transport.start();
 }
