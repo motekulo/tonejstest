@@ -52,6 +52,17 @@ Next thing to look at is how long those sequence callbacks take to execute. Can 
 
 Still in the pipeline is to set up an independent, Chris Wilson style schedule. There are definitely some lower level webaudio options available, so that's comforting.
 
+This was tagged in git with "thread_sched".
+
+How about seeing if the sequence callback will work if we try different instruments with maybe a lower overhead? So a Tone.Player maybe?
+
+
+#### Sequence callback with low level webaudio SimpleSynth
+
+So with an osc fired within the sequence callback, performance is fine. That would indicate that the overhead of a complex synth might be the problem?
+
+
+
 ## Profile data
 
 ### browser_TimelineRawData-20160719T171045.json
