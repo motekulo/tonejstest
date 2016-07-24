@@ -82,11 +82,11 @@ var timerWorker = null;     // The Web Worker used to fire timer messages
 //    Tone.Transport.bpm.value = 120;
 
 function init() {
-    audioContext = new AudioContext();
+    //audioContext = new AudioContext();
 
-    //this.instrument = new Tone.SimpleSynth();
+    var instrument = new Tone.MonoSynth();
 
-    //this.instrument.connect(Tone.Master);
+    instrument.connect(Tone.Master);
 
 
     // timerWorker = new Worker("./worker/metronomeworker.js");
@@ -101,31 +101,33 @@ function init() {
     //     }
     // };
     // timerWorker.postMessage({"interval":lookahead});
-}
+
     // Beep on start
     //this.instrument.triggerAttackRelease("G4", "8n");
 //    notes = [];
 
  var seq = new Tone.Sequence(function(time, note){
 
-         var osc = audioContext.createOscillator();
-         osc.connect( audioContext.destination );
-         if (beatNumber % 16 === 0)    // beat 0 == high pitch
-             osc.frequency.value = 880.0;
-         else if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
-             osc.frequency.value = 440.0;
-         else                        // other 16th notes = low pitch
-             osc.frequency.value = 220.0;
-
-         osc.start( time );
-         osc.stop( time + noteLength );
-         beatNumber++;
+     instrument.triggerAttackRelease(note, "16n");
+        //  var osc = audioContext.createOscillator();
+        //  osc.connect( audioContext.destination );
+        //  if (beatNumber % 16 === 0)    // beat 0 == high pitch
+        //      osc.frequency.value = 880.0;
+        //  else if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
+        //      osc.frequency.value = 440.0;
+        //  else                        // other 16th notes = low pitch
+        //      osc.frequency.value = 220.0;
+         //
+        //  osc.start( time );
+        //  osc.stop( time + noteLength );
+        //  beatNumber++;
 
     }, ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "E4"], "8n");
 
     seq.loop = true;
     seq.loopEnd = "1m";
     seq.start(0);
+}
 
 function scheduler() {
     // while there are notes that will need to play before the next interval,
