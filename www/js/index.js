@@ -84,7 +84,7 @@ var timerWorker = null;     // The Web Worker used to fire timer messages
 function init() {
     //audioContext = new AudioContext();
 
-    var instrument = new Tone.MonoSynth();
+    var instrument = new Tone.AMSynth();
 
     instrument.connect(Tone.Master);
 

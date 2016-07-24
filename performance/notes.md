@@ -63,6 +63,14 @@ So with an osc fired within the sequence callback, performance is fine. That wou
 
 Tagged in git with "sequencer_osc"
 
+#### Sequence callback with Tone.MonoSynth()
+
+No good in Android; taking about 5-8ms for each synth call.
+
+#### Sequence callback with Tone.AMSynth()
+
+No good in Android; up to 10ms for each synth call.
+
 
 ## Profile data
 
