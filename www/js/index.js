@@ -84,10 +84,9 @@ var timerWorker = null;     // The Web Worker used to fire timer messages
 function init() {
     //audioContext = new AudioContext();
 
-    var instrument = new Tone.AMSynth();
-
+    var instrument = new Tone.Player("./samples/snare_mix_1.wav");
     instrument.connect(Tone.Master);
-
+    instrument.retrigger = true;
 
     // timerWorker = new Worker("./worker/metronomeworker.js");
     //
@@ -108,7 +107,7 @@ function init() {
 
  var seq = new Tone.Sequence(function(time, note){
 
-     instrument.triggerAttackRelease(note, "16n");
+     instrument.start();
         //  var osc = audioContext.createOscillator();
         //  osc.connect( audioContext.destination );
         //  if (beatNumber % 16 === 0)    // beat 0 == high pitch

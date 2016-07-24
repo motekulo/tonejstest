@@ -71,6 +71,10 @@ No good in Android; taking about 5-8ms for each synth call.
 
 No good in Android; up to 10ms for each synth call.
 
+#### Sequence callback with Tone.Player()
+
+No good in Android; playback stutters (with a pattern to it though? Seems to be in the same place most bars?)
+
 
 ## Profile data
 
