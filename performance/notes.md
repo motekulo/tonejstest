@@ -28,6 +28,29 @@ And on the phone:
 
 Profile of using a sequence in Tone.js on the Aldi phone: aldi_phone_sequence_TimelineRawData-20160720T180110.json
 
+### 20160722
+
+The difference in timing (from an aural point of view) isn't that great between the Samsung S4, which is operating at close to 60fps, and the Aldi phone, which can go right down to 6fps.
+
+How does the metronome on the Aldi phone go?
+
+* First the metronome app from the chrome browser in the phone - so just pointing at the website; works fine
+
+* Now trying the metronome app as converted to a cordova/crosswalk app;
+
+### 20160723
+
+Spent some time getting my head around how scheduling in Tone.js works. The animationRequestFrame is used to set up the scheduling loop; the actual playing loop is on the separate webaudio thread. Looking at distances between when the callback for a sequence gets called should show what's going though right? It gets called when it's time to play, and we play. Perhaps it's a speed problem in that code? But what matters is when it gets called, and that's what the spreadsheet showed.
+
+On that, I put together a Google sheet that marked out when the callback was being called. That's where the scheduling delay seems to exist.
+
+### 20160724
+
+Tried different threshold (1.0), and smaller (16,32) and larger (192) ppq values. Still no change.
+
+Next thing to look at is how long those sequence callbacks take to execute. Can go back to spreadsheet and add in this data. If there's a correlation, then we have a bit more info.
+
+Still in the pipeline is to set up an independent, Chris Wilson style schedule. There are definitely some lower level webaudio options available, so that's comforting.
 
 ## Profile data
 
@@ -63,4 +86,3 @@ Perftest on samsung S4
 ### browser_TimelineRawData-20160719T171045.json
 
 Perftest on browser
-

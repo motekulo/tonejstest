@@ -51,47 +51,46 @@ var app = {
 
 app.initialize();
 
+var isPlaying = false;
+
 var ToneTest = function(){
-    Tone.Transport._clock._lookAhead = 0.256;
+    Tone.Transport._clock._lookAhead = 0.5;
+    Tone.Transport._clock._threshold = 1.0;
+    //Tone.Transport._ppq = 192;
+
     Tone.Transport.loop = true;
     Tone.Transport.loopStart = 0;
     Tone.Transport.loopEnd = "1m";
-    Tone.Transport.bpm.value = 116;
+    Tone.Transport.bpm.value = 120;
 
     this.instrument = new Tone.SimpleSynth();
 
     this.instrument.connect(Tone.Master);
     // Beep on start
-    this.instrument.triggerAttackRelease("G4", "8n");
+    //this.instrument.triggerAttackRelease("G4", "8n");
     notes = [];
 
     var seq = new Tone.Sequence((function(time, note){
 
         this.instrument.triggerAttackRelease(note, "16n");
+        //console.log("Note: " + note);
 
     }).bind(this), ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "E4"], "8n");
 
     seq.loop = true;
     seq.loopEnd = "1m";
     seq.start(0);
-    // this.part = new Tone.Part((function(time, note) {
-    //
-    //     this.instrument.triggerAttackRelease(note, "16n");
-    //
-    // }).bind(this), notes);
-    //
-    // this.part.add("0 * 8n", "C4");
-    // this.part.add("1 * 8n", "D4");
-    // this.part.add("2 * 8n", "E4");
-    // this.part.add("3 * 8n", "F4");
-    // this.part.add("4 * 8n", "G4");
-    // this.part.add("5 * 8n", "A4");
-    // this.part.add("6 * 8n", "B4");
-    // this.part.add("7 * 8n", "E4");
-    //
-    // this.part.loop = true;
-    // this.part.loopEnd = "1m";
-    // this.part.start(0);
 
-    Tone.Transport.start();
+}
+
+function play(){
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+        // start playing
+        Tone.Transport.start();
+    }
+    else {
+        Tone.Transport.stop();
+    }
+
 }
