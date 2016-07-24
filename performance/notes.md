@@ -61,6 +61,7 @@ How about seeing if the sequence callback will work if we try different instrume
 
 So with an osc fired within the sequence callback, performance is fine. That would indicate that the overhead of a complex synth might be the problem?
 
+Tagged in git with "sequencer_osc"
 
 
 ## Profile data
