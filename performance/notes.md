@@ -75,6 +75,10 @@ No good in Android; up to 10ms for each synth call.
 
 No good in Android; playback stutters (with a pattern to it though? Seems to be in the same place most bars?)
 
+### To do
+
+Have a look at the osc in the sequencer scheduled version, and see how long that osc code takes; that might well be the key to the performance problems on Android.
+
 
 ## Profile data
 

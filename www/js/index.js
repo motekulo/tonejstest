@@ -70,56 +70,52 @@ var noteLength = 0.05;      // length of "beep" (in seconds)
 var notesInQueue = [];      // the notes that have been put into the web audio,
                             // and may or may not have played yet. {note, time}
 var timerWorker = null;     // The Web Worker used to fire timer messages
-
-
+var source1 = null;
+sourceBuffer = null;
 //    Tone.Transport._clock._lookAhead = 0.5;
 //    Tone.Transport._clock._threshold = 1.0;
     //Tone.Transport._ppq = 192;
 
-//    Tone.Transport.loop = true;
-//    Tone.Transport.loopStart = 0;
-//    Tone.Transport.loopEnd = "1m";
-//    Tone.Transport.bpm.value = 120;
+    Tone.Transport.loop = true;
+    Tone.Transport.loopStart = 0;
+    Tone.Transport.loopEnd = "1m";
+   Tone.Transport.bpm.value = 120;
 
 function init() {
-    //audioContext = new AudioContext();
+    audioContext = new AudioContext();
 
-    var instrument = new Tone.Player("./samples/snare_mix_1.wav");
-    instrument.connect(Tone.Master);
-    instrument.retrigger = true;
+    //var instrument = new Tone.Player("./samples/snare_mix_1.wav");
+    //instrument.connect(Tone.Master);
+    //instrument.retrigger = true;
 
-    // timerWorker = new Worker("./worker/metronomeworker.js");
-    //
-    // timerWorker.onmessage = function(e) {
-    //     if (e.data == "tick") {
-    //         //console.log("tick!");
-    //         scheduler();
-    //     }
-    //     else {
-    //         console.log("message: " + e.data);
-    //     }
-    // };
-    // timerWorker.postMessage({"interval":lookahead});
+    var bufferLoader = new BufferLoader(
+    audioContext,
+    [
+      './samples/snare_mix_1.wav',
+    ],
+    finishedLoading
+    );
 
-    // Beep on start
-    //this.instrument.triggerAttackRelease("G4", "8n");
-//    notes = [];
+  bufferLoader.load();
+
 
  var seq = new Tone.Sequence(function(time, note){
 
-     instrument.start();
-        //  var osc = audioContext.createOscillator();
-        //  osc.connect( audioContext.destination );
-        //  if (beatNumber % 16 === 0)    // beat 0 == high pitch
-        //      osc.frequency.value = 880.0;
-        //  else if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
-        //      osc.frequency.value = 440.0;
-        //  else                        // other 16th notes = low pitch
-        //      osc.frequency.value = 220.0;
-         //
-        //  osc.start( time );
-        //  osc.stop( time + noteLength );
-        //  beatNumber++;
+
+
+       var source = audioContext.createBufferSource();
+       // Connect graph
+       source.buffer = sourceBuffer;
+       source.loop = true;
+       source.connect(audioContext.destination);
+       // Start playback, but make sure we stay in bound of the buffer.
+       //source.start(0, startOffset % buffer.duration);
+
+     source.start();
+     source.stop(audioContext.currentTime + 0.125);
+     //instrument.start();
+     //console.log("ping 8th note");
+
 
     }, ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "E4"], "8n");
 
@@ -127,6 +123,18 @@ function init() {
     seq.loopEnd = "1m";
     seq.start(0);
 }
+
+function finishedLoading(bufferList) {
+  // Create two sources and play them both together.
+  source1 = audioContext.createBufferSource();
+  source1.buffer = bufferList[0];
+  sourceBuffer = bufferList[0];
+  source1.connect(audioContext.destination);
+  source1.start();
+  source1.stop(audioContext.currentTime + 0.12);
+}
+
+
 
 function scheduler() {
     // while there are notes that will need to play before the next interval,
